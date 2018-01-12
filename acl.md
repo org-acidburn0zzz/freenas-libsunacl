@@ -26,33 +26,33 @@ The following types are supported for *aclbufp*:
 The following values for cmd are supported:
 
 **SETACL**
->    nentries aclent_t ACL entries, specified in buffer aclbufp, are stored in the file's ACL. All directories in the path name must be 
+>    *nentries* `aclent_t` ACL entries, specified in buffer *aclbufp*, are stored in the file's ACL. All directories in the path name must be
 >    searchable.
 
 **GETACL**
->    Buffer aclbufp is filled with the file's aclent_t ACL entries. Read access to the file is not required, but all directories in the
+>    Buffer *aclbufp* is filled with the file's `aclent_t` ACL entries. Read access to the file is not required, but all directories in the
 >    path name must be searchable.
 
 **GETACLCNT**
- >   The number of entries in the file's aclent_t ACL is returned. Read access to the file is not required, but all directories in the path
+ >   The number of entries in the file's `aclent_t` ACL is returned. Read access to the file is not required, but all directories in the path
  >   name must be searchable.
 
 **ACE_SETACL**
->    nentries ace_t ACL entries, specified in buffer aclbufp, are stored in the file's ACL. All directories in the path name must be 
+>    *nentries* `ace_t` ACL entries, specified in buffer *aclbufp*, are stored in the file's ACL. All directories in the path name must be
 >    searchable. Write ACL access is required to change the file's ACL.
 
 **ACE_GETACL**
->    Buffer aclbufp is filled with the file's ace_t ACL entries. Read access to the file is required and all directories in the path 
+>    Buffer *aclbufp* is filled with the file's `ace_t` ACL entries. Read access to the file is required and all directories in the path
 >    name must be searchable.
 
 **ACE_GETACLCNT**
->    The number of entries in the file's ace_t ACL is returned. Read access to the file is required and all directories in the path 
+>    The number of entries in the file's `ace_t` ACL is returned. Read access to the file is required and all directories in the path
 >    name must be searchable.
 
 ## Return Values
 
-Upon successful completion, `acl()` and `facl()` return 0 if cmd is *SETACL* or *ACE_SETACL*. If cmd is *GETACL*, *GETACLCNT*, *ACE_GETACL*
-or *ACE_GETACLCNT*, the number of ACL entries is returned. Otherwise, -1 is returned and errno is set to indicate the error.
+Upon successful completion, `acl()` and `facl()` return 0 if *cmd* is **SETACL** or **ACE_SETACL**. If *cmd* is **GETACL**, **GETACLCNT**, **ACE_GETACL**
+or **ACE_GETACLCNT**, the number of ACL entries is returned. Otherwise, -1 is returned and errno is set to indicate the error.
 
 ## Errors
 
@@ -62,11 +62,11 @@ The `acl()` function will fail if:
 >    The caller does not have access to a component of the pathname.
 
 **EFAULT**
->    The pathp or aclbufp argument points to an illegal address.
+>    The *pathp* or *aclbufp* argument points to an illegal address.
 
 **EINVAL**
->    The cmd argument is not *GETACL*, *SETACL*, *ACE_GETACL*, *GETACLCNT*, or *ACE_GETACLCNT*; the cmd argument is *SETACL* and nentries 
->    is less than 3; or the cmd argument is *SETACL* or *ACE_SETACL* and the ACL specified in aclbufp is not valid.
+>    The *cmd* argument is not **GETACL**, **SETACL**, **ACE_GETACL**, **GETACLCNT**, or **ACE_GETACLCNT**; the *cmd* argument is **SETACL** and *nentries* 
+>    is less than 3; or the cmd argument is **SETACL** or **ACE_SETACL** and the ACL specified in *aclbufp* is not valid.
 
 **EIO**
 >    A disk I/O error has occurred while storing or retrieving the ACL.
@@ -75,32 +75,28 @@ The `acl()` function will fail if:
 >    A component of the path does not exist.
 
 **ENOSPC**
->    The cmd argument is *GETACL* and nentries is less than the number of entries in the file's ACL, or the cmd argument is *SETACL* 
+>    The *cmd* argument is **GETACL** and *nentries* is less than the number of entries in the file's ACL, or the cmd argument is **SETACL** 
 >    and there is insufficient space in the file system to store the ACL.
 
 **ENOSYS**
->    The cmd argument is *SETACL* or *ACE_SETACL* and the file specified by pathp resides on a file system that does not support ACLs,
+>    The *cmd* argument is **SETACL** or **ACE_SETACL** and the file specified by *pathp* resides on a file system that does not support ACLs,
 >    or the `acl()` function is not supported by this implementation.
 
 **ENOTDIR**
->    A component of the path specified by pathp is not a directory, or the cmd argument is *SETACL* or *ACE_SETACL* and an attempt 
+>    A component of the path specified by *pathp* is not a directory, or the cmd argument is **SETACL** or **ACE_SETACL** and an attempt 
 >    is made to set a default ACL on a file type other than a directory.
 
 **ENOTSUP**
->    The cmd argument is *GETACL*, but the ACL is composed of *ace_t* entries, and the ACL cannot be translated into *aclent_t* form.
+>    The *cmd* argument is **GETACL**, but the ACL is composed of `ace_t` entries, and the ACL cannot be translated into `aclent_t` form.
 >
->    The cmd argument is *ACE_SETACL*, but the underlying filesystem only supports ACLs composed of *aclent_t* entries and the ACL 
->    could not be translated into *aclent_t* form.
+>    The *cmd* argument is **ACE_SETACL**, but the underlying filesystem only supports ACLs composed of `aclent_t` entries and the ACL 
+>    could not be translated into `aclent_t` form.
 
 **EPERM**
 >    The effective user ID does not match the owner of the file and the process does not have appropriate privilege.
 
 **EROFS**
->    The cmd argument is *SETACL* or *ACE_SETACL* and the file specified by *pathp* resides on a file system that is mounted read-only.
-
-## Attributes
-
-See `attributes(5)` for descriptions of the following attributes:
+>    The *cmd* argument is **SETACL** or **ACE_SETACL** and the file specified by *pathp* resides on a file system that is mounted read-only.
 
 ## See Also
 
